@@ -97,10 +97,10 @@ def makeWebhookResult(data):
     #print(data)
 
     return {
-        #"speech": speech,
-        "speech": data
-        "displayText": data,
-        #"displayText": speech,
+        "speech": speech,
+        #"speech": data
+        #"displayText": data,
+        "displayText": speech,
         # "data": data,
         # "contextOut": [],
         "source": "mobile-phone-github"
