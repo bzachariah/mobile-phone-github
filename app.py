@@ -59,7 +59,7 @@ def makeWebhookResult(os, display):
 
     with open("tyy-4io.csv", "r") as ins:
         for line in ins:
-            if line.contains(os):
+            if os in line:
             break
                 
     speech = line
