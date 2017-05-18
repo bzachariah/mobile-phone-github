@@ -78,6 +78,7 @@ def makeWebhookResult(data):
         #"speech": data
         #"displayText": data,
         "displayText": speech,
+        "data": {"telegram": {<speech>}}
         # "data": data,
         # "contextOut": [],
         "source": "bzachariah/mobile-phone-github"
