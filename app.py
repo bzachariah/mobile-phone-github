@@ -63,6 +63,7 @@ def makeWebhookResult(os, display):
                break
                 
     speech = line
+    
             
     #speech = os + " " + display
     print("Response:")
