@@ -60,11 +60,11 @@ def makeWebhookResult(os, display):
     with open("tyy-4io.csv", "r") as ins:
         for line in ins:
             if os in line:
-                speech = line
+                matched_line = line
                 break
                 
-    
-    
+    columns = matched_line.split(',')
+    speech = columns[1]
             
     #speech = os + " " + display
     print("Response:")
