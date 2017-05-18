@@ -38,7 +38,8 @@ def webhook():
 def processRequest(req):
     if req.get("result").get("action") != "mobile-phone-action":
         return {}
-    baseurl = "https://query.yahooapis.com/v1/public/yql?"
+    #baseurl = "https://query.yahooapis.com/v1/public/yql?"
+    baseurl = ""
     yql_query = makeYqlQuery(req)
     if yql_query is None:
         return {}
@@ -52,11 +53,15 @@ def processRequest(req):
 def makeYqlQuery(req):
     result = req.get("result")
     parameters = result.get("parameters")
-    city = parameters.get("geo-city")
-    if city is None:
+    #city = parameters.get("geo-city")
+    my_OS = parameters.get("OS")
+    if my_OS is None:
         return None
+    #if city is None:
+    #    return None
 
-    return "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text='" + city + "')"
+    return my_OS
+    #return "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text='" + city + "')"
 
 
 def makeWebhookResult(data):
@@ -88,11 +93,14 @@ def makeWebhookResult(data):
              ", the temperature is " + condition.get('temp') + " " + units.get('temperature')
 
     print("Response:")
-    print(speech)
+    #print(speech)
+    print(data)
 
     return {
-        "speech": speech,
-        "displayText": speech,
+        #"speech": speech,
+        "speech": data
+        "displayText": data,
+        #"displayText": speech,
         # "data": data,
         # "contextOut": [],
         "source": "apiai-weather-webhook-sample"
