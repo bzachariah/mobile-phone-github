@@ -57,15 +57,20 @@ def processRequest(req):
 
 def makeWebhookResult(os, display):
 
-    with open("tyy-4io.csv", "r") as ins:
+    with open("tyy-4io.txt", "r") as ins:
         for line in ins:
             if os in line:
                 matched_line = line
                 break
                 
-    columns = matched_line.split(',')
-    speech = columns[1]
+    columns = matched_line.split('\t')
+    title = columns[0]
+    imageUrl = columns[2]
+    price = columns[4]
+    productUrl = columns[5]
             
+    speech = "Here is a phone that suits your needs: " + title + " priced at Rs " + price + ". More details at " + productUrl
+        
     #speech = os + " " + display
     print("Response:")
     print(speech)
