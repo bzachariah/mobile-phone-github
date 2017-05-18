@@ -67,16 +67,16 @@ def makeYqlQuery(req):
 
 
 def makeWebhookResult(data):
-    
+    speech = "Testing"
     print("Response:")
-    #print(speech)
-    print(data)
+    print(speech)
+    #print(data)
 
     return {
-        #"speech": speech,
-        "speech": data
-        "displayText": data,
-        #"displayText": speech,
+        "speech": speech,
+        #"speech": data
+        #"displayText": data,
+        "displayText": speech,
         # "data": data,
         # "contextOut": [],
         "source": "bzachariah/mobile-phone-github"
