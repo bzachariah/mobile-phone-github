@@ -36,18 +36,15 @@ def webhook():
 
 
 def processRequest(req):
-    if req.get("result").get("action") != "mobilePhoneAction":
+    if req.get("result").get("action") != "yahooWeatherForecast":
         return {}
-    #if req.get("result").get("action") != "yahooWeatherForecast":    
-    #    return {}
-    #baseurl = "https://query.yahooapis.com/v1/public/yql?"
-    #baseurl = ""
-    #yql_query = makeYqlQuery(req)
-    #if yql_query is None:
-    #    return {}
-    #yql_url = baseurl + urlencode({'q': yql_query}) + "&format=json"
-    #result = urlopen(yql_url).read()
-    #data = json.loads(result)
+    baseurl = "https://query.yahooapis.com/v1/public/yql?"
+    yql_query = makeYqlQuery(req)
+    if yql_query is None:
+        return {}
+    yql_url = baseurl + urlencode({'q': yql_query}) + "&format=json"
+    result = urlopen(yql_url).read()
+    data = json.loads(result)
     res = makeWebhookResult(data)
     return res
 
@@ -55,35 +52,50 @@ def processRequest(req):
 def makeYqlQuery(req):
     result = req.get("result")
     parameters = result.get("parameters")
-    #city = parameters.get("geo-city")
-    #my_OS = parameters.get("os")
-    #if my_OS is None:
-    #    return None
-    #if city is None:
-    #    return None
+    city = parameters.get("geo-city")
+    if city is None:
+        return None
 
-    #return my_OS
-    return None
-    #return "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text='" + city + "')"
+    return "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text='" + city + "')"
 
 
 def makeWebhookResult(data):
-    speech = "Testing"
+    query = data.get('query')
+    if query is None:
+        return {}
+
+    result = query.get('results')
+    if result is None:
+        return {}
+
+    channel = result.get('channel')
+    if channel is None:
+        return {}
+
+    item = channel.get('item')
+    location = channel.get('location')
+    units = channel.get('units')
+    if (location is None) or (item is None) or (units is None):
+        return {}
+
+    condition = item.get('condition')
+    if condition is None:
+        return {}
+
+    # print(json.dumps(item, indent=4))
+
+    speech = "Today in " + location.get('city') + ": " + condition.get('text') + \
+             ", the temperature is " + condition.get('temp') + " " + units.get('temperature')
+
     print("Response:")
-    #print(speech)
-    print("Testing 2")
-    #print(data)
+    print(speech)
 
     return {
         "speech": speech,
-        #"speech": data
-        #"displayText": data,
         "displayText": speech,
-        "data": {"telegram": {"Testing"}}
         # "data": data,
         # "contextOut": [],
-        "source": "bzachariah/mobile-phone-github"
-        #"source": "apiai-weather-webhook-sample"
+        "source": "apiai-weather-webhook-sample"
     }
 
 
