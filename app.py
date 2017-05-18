@@ -56,8 +56,12 @@ def processRequest(req):
 
 
 def makeWebhookResult(os, display):
-    
-    speech = os + " " + display
+
+    with open("tyy-4io.csv", "r") as ins:
+        for line in ins:
+            speech = line
+            
+    #speech = os + " " + display
     print("Response:")
     print(speech)
 
