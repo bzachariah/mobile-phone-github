@@ -38,10 +38,16 @@ def webhook():
 def processRequest(req):
     if req.get("result").get("action") != "mobilePhoneAction":
         return {}
-    
-    os = makeYqlQuery(req)
+
+    result = req.get("result")
+    parameters = result.get("parameters")
+    os = parameters.get("os")
     if os is None:
         return {}
+    display = parameters.get("display")
+  
+
+
     yql_query ="select * from weather.forecast where woeid in (select woeid from geo.places(1) where text='" + "London" + "')"
 
     baseurl = "https://query.yahooapis.com/v1/public/yql?"
@@ -52,16 +58,8 @@ def processRequest(req):
     return res
 
 
-def makeYqlQuery(req):
-    result = req.get("result")
-    parameters = result.get("parameters")
-    os = parameters.get("os")
-    if os is None:
-        return None
-
-    return os
     
-    #return "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text='" + "London" + "')"
+    
 
 
 def makeWebhookResult(data):
