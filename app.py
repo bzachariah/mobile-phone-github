@@ -41,7 +41,7 @@ def processRequest(req):
 
     result = req.get("result")
     parameters = result.get("parameters")
-    os = parameters.get("os")
+    os = parameters.get("OS")
     if os is None:
         return {}
     display = parameters.get("display")
