@@ -71,7 +71,7 @@ def makeWebhookResult(os, display):
             
     #speech = "Here is a phone that suits your needs: " + title + " priced at Rs " + price + ". More details at " + productUrl
         
-    speech = os + " " + display
+    speech = "OS = " + os + " " + display
     print("Response:")
     print(speech)
 
